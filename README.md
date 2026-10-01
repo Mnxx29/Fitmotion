@@ -1,23 +1,26 @@
-# FitMotion — Smart Sensor Workout
+# FitMotion — Entrenador de Bolsillo con Sensores
 
 Aplicación móvil desarrollada en **MIT App Inventor** para la asignatura **Desarrollo de Aplicación Móvil** de la **Universidad de Los Lagos**.
 
 ---
 
-## 📌 Descripción del Proyecto
+## 📌 ¿Qué es FitMotion?
 
-**FitMotion** transforma un teléfono inteligente convencional en un asistente biomecánico capaz de registrar, auditar y retroalimentar entrenamientos físicos en tiempo real sin requerir accesorios externos ni intervención manual constante.
+**FitMotion** es una aplicación diseñada para que cualquier persona pueda entrenar y registrar sus ejercicios (como sentadillas o caminata) usando únicamente los sensores de su teléfono celular, sin necesidad de pulseras ni accesorios externos.
 
-La aplicación utiliza los sensores inerciales del dispositivo móvil para cuantificar el movimiento del usuario, analizar la técnica postural en ejercicios funcionales (como sentadillas) y detectar zancadas en marcha o trote, brindando respuestas inmediatas visuales, auditivas (síntesis de voz) y hápticas (vibración).
+La app mide de manera automática el movimiento y la inclinación del teléfono:
+- **Tú pones la meta:** Puedes elegir cuántas sentadillas o cuántos pasos quieres hacer (por ejemplo, 15 sentadillas o 1.000 pasos).
+- **Alarma al cumplir:** Al alcanzar tu objetivo, suena una alarma en el celular, vibra de forma prolongada y una voz te avisa que completaste tu meta.
+- **Modo Bolsillo (Pantalla bloqueada):** Puedes activar el Modo Bolsillo, la pantalla se oscurece y se protege contra toques involuntarios, permitiéndote guardar el celular en el bolsillo mientras entrenas con total comodidad.
 
 ---
 
-## 🚀 Contenido del Repositorio
+## 🚀 Contenido de la Carpeta
 
-* **`FitMotion.aia`**: Archivo fuente del proyecto para importar en [MIT App Inventor](https://ai2.appinventor.mit.edu).
-* **`DOCUMENTO_ENTREGA_FITMOTION.md`**: Informe técnico completo del proyecto (introducción, problema, solución, arquitectura de pantallas, sensores de hardware, lógica de bloques y guía de ejecución).
-* **`Documento_Entrega_FitMotion_ULagos.docx`**: Versión formal en formato Microsoft Word del informe técnico.
-* **`Evaluacion_App_Movil_App_Inventor_ULagos.docx`**: Pauta y requerimientos oficiales de la evaluación universitaria.
+* **`FitMotion.aia`**: Archivo del proyecto listo para importar en [MIT App Inventor](https://ai2.appinventor.mit.edu).
+* **`DOCUMENTO_ENTREGA_FITMOTION.md`**: Informe de entrega completo (problema, usuario, solución, pantallas, sensores utilizados y guía de prueba).
+* **`Documento_Entrega_FitMotion_ULagos.docx`**: Versión en formato Microsoft Word del informe.
+* **`Evaluacion_App_Movil_App_Inventor_ULagos.docx`**: Pauta y requerimientos de la evaluación universitaria.
 
 ---
 
@@ -27,26 +30,28 @@ La aplicación utiliza los sensores inerciales del dispositivo móvil para cuant
 
 ---
 
-## 📱 Arquitectura de Pantallas
+## 📱 Pantallas de la Aplicación
 
-1. **Screen1 (Login):** Control de acceso seguro (`usuario` / `1234`), control de errores con alerta háptica y persistencia de sesión con `TinyDB`.
-2. **Screen2 (Rutinas):** Catálogo de selección entre *Sentadillas Inteligentes* (meta: 10 reps) y *Podómetro & Trote Activo* (meta: 50 pasos).
-3. **Screen3 (En Vivo):** Centro de telemetría inercial en tiempo real, cronómetro desacoplado, conteo biomecánico mediante máquina de estados y control de pausa/reanudación.
-4. **Screen4 (Resumen):** Consola de resultados finales con métricas acumuladas recuperadas desde `TinyDB`.
-
----
-
-## ⚙️ Hardware Integrado
-
-* **Sensor de Orientación (`OrientationSensor`):** Mide la inclinación longitudinal (*Pitch*) para asegurar que la sentadilla alcance al menos 45° de flexión profunda antes de retornar a la posición erguida (< 25°).
-* **Acelerómetro (`AccelerometerSensor`):** Mide la aceleración vertical (*YAccel*) con filtro anti-rebote (*debouncing*) para registrar el impacto de cada zancada.
-* **Motor de Vibración (`Sound.Vibrate`):** Avisos táctiles de profundidad alcanzada, repetición completada y error de acceso.
-* **Sintetizador de Voz (`TextToSpeech`):** Lectura en voz alta del número de repetición para entrenamiento manos libres.
+1. **Screen1 (Iniciar Sesión):** Acceso rápido con usuario y clave (`usuario` / `1234`), aviso por vibración en caso de error y guardado de sesión con `TinyDB`.
+2. **Screen2 (Elegir Ejercicio y Meta):** Selección entre *Sentadillas* y *Contador de Pasos*, permitiendo ingresar la meta que el usuario desea cumplir.
+3. **Screen3 (Entrenamiento en Vivo):** Conteo automático con sensores, cronómetro, botón de *Modo Bolsillo* para guardar en el pantalón y alarma sonora al cumplir la meta.
+4. **Screen4 (Resumen):** Resultados finales con repeticiones conseguidas, tiempo total y calorías aproximadas.
 
 ---
 
-## 🛠️ Ejecución con MIT AI2 Companion
+## ⚙️ Sensores de Hardware Integrados
 
-1. Importar `FitMotion.aia` en [MIT App Inventor](https://ai2.appinventor.mit.edu).
-2. En el menú superior seleccionar **Connect ➔ AI Companion**.
-3. En el teléfono Android abrir la app **MIT AI2 Companion** y escanear el código QR.
+* **Sensor de Inclinación (`OrientationSensor`):** Mide el ángulo del celular en el muslo o bolsillo para registrar sentadillas completas (flexión profunda de más de 45° y vuelta a posición de pie).
+* **Sensor de Movimiento / Acelerómetro (`AccelerometerSensor`):** Registra cada paso al caminar o trotar mediante la fuerza de movimiento vertical.
+* **Sonido de Alarma (`Sound`):** Hace sonar la alarma (`alarma.wav`) cuando se llega a la meta.
+* **Vibración del teléfono:** Avisa cuando la flexión fue correcta y cuando se completó una repetición o el entrenamiento.
+* **Voz del teléfono (`TextToSpeech`):** Dicta el número de repeticiones en voz alta para entrenar sin mirar la pantalla.
+
+---
+
+## 🛠️ Cómo Probar la App con MIT AI2 Companion
+
+1. Abre [MIT App Inventor](https://ai2.appinventor.mit.edu) e importa el archivo `FitMotion.aia`.
+2. En el menú superior haz clic en **Connect ➔ AI Companion**.
+3. En tu teléfono Android abre la app **MIT AI2 Companion** y escanea el código QR en pantalla.
+4. Inicia sesión con `usuario` / `1234`, fija tu objetivo, activa el *Modo Bolsillo* y prueba el ejercicio.

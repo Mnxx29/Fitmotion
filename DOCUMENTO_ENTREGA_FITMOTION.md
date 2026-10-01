@@ -1,5 +1,5 @@
-# FitMotion — Smart Sensor Workout
-## Informe Técnico de Proyecto
+# FitMotion — Entrenador de Bolsillo con Sensores
+## Informe de Entrega del Proyecto
 **Universidad de Los Lagos** — Departamento de Ingeniería en Informática  
 **Asignatura:** Desarrollo de Aplicación Móvil  
 **Proyecto:** FitMotion  
@@ -9,159 +9,145 @@
 
 ## 1. Introducción
 
-FitMotion es una aplicación móvil desarrollada en **MIT App Inventor** orientada al acondicionamiento físico y la salud postural. Su propósito fundamental es transformar un teléfono inteligente convencional en un asistente biomecánico capaz de registrar, auditar y retroalimentar entrenamientos físicos en tiempo real sin requerir accesorios externos ni intervención manual constante.
+**FitMotion** es una aplicación móvil desarrollada en **MIT App Inventor** creada para ayudar a las personas a hacer ejercicio de forma guiada y automática usando su propio teléfono celular, sin necesidad de comprar relojes inteligentes ni accesorios caros.
 
-A través del aprovechamiento directo de los sensores de hardware integrados en el dispositivo móvil, la aplicación cuantifica el movimiento del usuario, analiza la técnica de ejecución en ejercicios funcionales y entrega respuestas tanto visuales como auditivas y hápticas.
-
----
-
-## 2. Problemática y Usuario Objetivo
-
-En la actualidad, una proporción significativa de personas practica actividad física de manera autodidacta en sus hogares o en espacios públicos sin contar con la supervisión de un preparador físico. Esta situación suele generar dos dificultades recurrentes: la imprecisión en el registro manual de las series y repeticiones, y la ejecución deficiente de los ejercicios por falta de retroalimentación inmediata, lo cual incrementa el riesgo de sobrecargas articulares y lesiones lumbares.
-
-FitMotion aborda esta necesidad ofreciendo una herramienta accesible que valida la calidad de cada movimiento mediante parámetros cinemáticos medidos por el propio teléfono.
-
-El usuario objetivo comprende a jóvenes y adultos (entre 18 y 60 años) —incluyendo estudiantes y personas con rutinas laborales sedentarias— que desean incorporar pausas activas o entrenamientos estructurados en su vida diaria, requiriendo un sistema de monitoreo autónomo, confiable y que opere con manos libres.
+Aprovechando los **sensores de movimiento e inclinación** que ya vienen dentro de cualquier teléfono Android, la app cuenta automáticamente las repeticiones de ejercicios (como sentadillas) o los pasos al caminar o trotar, avisando con sonido de alarma, voz y vibraciones cuando se cumple el objetivo fijado por el usuario.
 
 ---
 
-## 3. Propuesta de Solución
+## 2. Problema y Usuario Objetivo
 
-La solución plantea un flujo de entrenamiento guiado donde el teléfono móvil actúa como sensor inercial adherido al cuerpo (ubicado en el muslo, bolsillo o sostenido en la mano). 
+### El problema:
+Muchas personas hacen ejercicio por su cuenta en casa o salen a caminar al aire libre sin la supervisión de un entrenador. Al hacerlo, suelen perder la cuenta de sus repeticiones, no saben si se están agachando lo suficiente en una sentadilla y tienen que estar mirando la pantalla o tocando el teléfono con las manos sudadas, lo cual resulta incómodo y corta el ritmo del entrenamiento.
 
-A diferencia de las aplicaciones tradicionales que se limitan a cronómetros estáticos o bitácoras manuales, FitMotion implementa algoritmos de detección cinemática que analizan en tiempo real los datos angulares y aceleraciones del usuario. De este modo, una repetición sólo se da por válida cuando se completa el rango articular biomecánico requerido, promoviendo una técnica correcta y manteniendo al usuario motivado mediante estímulos auditivos y táctiles continuos.
+### Usuario objetivo:
+Estudiantes, trabajadores y cualquier persona (de 18 a 60 años) que quiera mantenerse activa, hacer pausas saludables durante el día o caminar para cuidar su salud, necesitando una app práctica, fácil de entender y que funcione con el celular guardado en el bolsillo.
 
 ---
 
-## 4. Estructura de Pantallas y Navegación
+## 3. Propuesta de Solución y Novedades
 
-La aplicación está organizada en 4 pantallas secuenciales e interconectadas que cubren desde el acceso inicial hasta la entrega de resultados:
+FitMotion permite que el celular funcione como un entrenador personal dentro del bolsillo:
+
+1. **Objetivos personalizados:** El usuario puede ingresar la meta que desea lograr para su sesión (por ejemplo, una meta de 15 sentadillas o 1.000 pasos).
+2. **Alarma al completar la meta:** Apenas se alcanza el número fijado, suena una **alarma sonora**, el teléfono **vibra** y una **voz** anuncia: *"¡Objetivo cumplido!"*, permitiendo saber de inmediato que la meta fue lograda sin tener que mirar la pantalla.
+3. **Modo Bolsillo (Pantalla bloqueada):** Al iniciar la rutina, el usuario puede activar el botón de **Modo Bolsillo**. Esto coloca la pantalla en negro (ahorro de batería) y bloquea los toques accidentales de la tela del pantalón. De esta manera, el teléfono se guarda en el bolsillo y los sensores continúan contando el ejercicio de forma ininterrumpida.
+4. **Lenguaje claro y directo:** La interfaz evita tecnicismos confusos y muestra la información que el usuario realmente necesita: repeticiones logradas, meta fijada, tiempo transcurrido y estado del ejercicio.
+
+---
+
+## 4. Estructura de Pantallas de la Aplicación
+
+La aplicación se compone de 4 pantallas conectadas de manera ordenada y fácil de usar:
 
 ```
-[Screen1: Acceso / Login]
+[Screen1: Iniciar Sesión]
            │
            ▼
-[Screen2: Menú de Rutinas]
+[Screen2: Elegir Ejercicio y Meta]
            │
            ▼
-[Screen3: Entrenamiento en Vivo]
+[Screen3: Entrenamiento en Vivo (Modo Bolsillo + Alarma)]
            │
            ▼
-[Screen4: Resumen y Métricas]
-    │                     │
-    ▼                     ▼
-[Nueva Rutina]       [Cerrar App]
+[Screen4: Resumen de Resultados]
 ```
 
-### Screen1: Control de Acceso y Bienvenida
-* **Propósito:** Brindar un punto de entrada seguro y presentar la identidad visual de la aplicación.
-* **Componentes principales:** Logotipo institucional de la app (`imgLogo`), campos de texto para usuario y clave (`txtUsuario`, `txtClave`), botón de autenticación (`btnIngresar`) y etiqueta de retroalimentación en caso de error (`lblError`).
-* **Lógica y eventos:** Valida las credenciales ingresadas (`usuario` / `1234`). Al ser correctas, almacena el identificador de sesión en la base de datos local `TinyDB` y avanza a `Screen2`. En caso de discordancia, despliega un aviso visual y acciona el actuador de vibración para advertir al usuario. El botón nativo de retorno (`Screen1.BackPressed`) finaliza la ejecución de forma ordenada.
+### Screen1: Iniciar Sesión
+* **Qué hace:** Pantalla de bienvenida con el logo de la app. Permite el acceso seguro del usuario.
+* **Componentes:** Logo institucional, campos para escribir usuario y contraseña, botón de inicio de sesión y mensaje de error si los datos son incorrectos.
+* **Datos de prueba rápidos:** Usuario: `usuario` | Contraseña: `1234`.
+* **Detalle:** Si los datos no coinciden, el celular vibra brevemente y muestra una advertencia visual. Si coinciden, guarda la sesión en `TinyDB` y pasa a `Screen2`.
 
-### Screen2: Panel de Selección de Rutina
-* **Propósito:** Permitir al deportista seleccionar el tipo de entrenamiento físico a desarrollar en la sesión.
-* **Componentes principales:** Dos tarjetas de actividad claramente diferenciadas:
-  * *Sentadillas Inteligentes:* Rutina enfocada en fuerza de tren inferior con meta predeterminada de 10 repeticiones.
-  * *Podómetro y Trote Activo:* Rutina aeróbica orientada a cadencia y desplazamiento con meta predeterminada de 50 pasos.
-  * Botón de cierre de sesión (`btnCerrarSesion`).
-* **Lógica y eventos:** Al seleccionar cualquiera de las dos actividades, la aplicación parametriza y almacena en `TinyDB` las etiquetas correspondientes al modo de entrenamiento y la meta cuantitativa elegida, realizando la transición inmediata hacia `Screen3`. La tecla física de retroceso retorna a `Screen1`.
+### Screen2: Elige tu Ejercicio y Configura tu Meta
+* **Qué hace:** Menú principal donde el usuario elige qué ejercicio quiere realizar y puede escribir su propio objetivo numérico.
+* **Opciones disponibles:**
+  * **🏋️ Sentadillas:** Mide la inclinación del celular en el muslo o bolsillo para contar cada flexión bien hecha. Incluye una casilla para escribir la meta deseada (por defecto: 15 repeticiones).
+  * **🚶 Contador de Pasos:** Detecta el impacto de cada zancada al caminar o trotar. Incluye una casilla para escribir la meta de pasos (por defecto: 1.000 pasos).
+* **Botón de Cerrar Sesión:** Permite salir y volver a la pantalla de login.
 
-### Screen3: Centro de Telemetría y Ejecución en Vivo
-* **Propósito:** Constituye el núcleo biomecánico de la app; procesa en segundo plano las señales de los sensores, evalúa los ángulos posturales, administra el tiempo transcurrido y retroalimenta al usuario.
-* **Componentes principales:** 
-  * Encabezado con visualización del modo y cronómetro en segundos (`lblTiempoLive`).
-  * Indicador numérico de repeticiones en tamaño prominente para lectura a distancia (`lblGranNumero`).
-  * Tarjeta de instrucción postural dinámica (`lblEstadoFase`).
-  * Consola de telemetría de sensores (`lblValOrientacion` y `lblValAceleracion`).
-  * Botones de control operativo: Pausa/Reanudación (`btnPausa`) y Finalización (`btnFinalizarLive`).
-* **Componentes no visuales:** `AccelerometerSensor1`, `OrientationSensor1`, `ClockCrono`, `ClockSensores`, `Sound1`, `TextToSpeech1` y `TinyDB1`.
-* **Lógica y eventos:** En el inicio (`Screen3.Initialize`), recupera las metas desde `TinyDB`, inicializa variables de estado y emite un mensaje de voz anunciando el inicio. El algoritmo analiza continuamente los datos de los sensores para registrar repeticiones válidas. Al presionar finalizar, guarda las métricas consolidadas en `TinyDB` y transfiere el control a `Screen4`.
+### Screen3: Entrenamiento en Vivo
+* **Qué hace:** Es la pantalla donde transcurre la actividad física. Registra las lecturas de los sensores en tiempo real, suma las repeticiones, lleva el tiempo y avisa al cumplir la meta.
+* **Elementos en pantalla:**
+  * **Cronómetro:** Muestra los minutos y segundos transcurridos.
+  * **Número grande:** Indica las repeticiones o pasos completados hasta el momento.
+  * **Etiqueta de meta:** Muestra el objetivo configurado (ej: *Meta: 15*).
+  * **Tarjeta de consejos:** Indica la fase del movimiento (*"Coloca el móvil en tu bolsillo"*, *"¡Buena flexión! Ahora sube..."*, *"¡Repetición completada!"*).
+  * **Datos del sensor en vivo:** Muestra de forma simple los grados de inclinación y la fuerza de movimiento detectada.
+  * **Botón 🔒 Modo Bolsillo (Bloquear Pantalla):** Activa la pantalla de protección oscura para meter el teléfono al bolsillo sin miedo a toques involuntarios.
+  * **Botón 🔓 Desbloquear Pantalla:** Permite volver a la vista normal en cualquier momento para ver las estadísticas en detalle.
+  * **Botones Pausar / Reanudar y Finalizar:** Para controlar la sesión manualmente cuando se desee.
+* **Comportamiento de la Alarma:** Al llegar o superar la meta configurada (ej: repetición 15), se activa la alarma sonora (`alarma.wav`), el celular vibra con un pulso largo (1,5 segundos) y la voz del teléfono felicita al usuario.
 
-### Screen4: Resumen Post-Entrenamiento
-* **Propósito:** Exhibir los resultados cuantitativos consolidados de la actividad física recién finalizada.
-* **Componentes principales:** Encabezado con distintivo de sesión completada, panel de métricas donde se desglosa la rutina efectuada (`lblModoRealizado`), repeticiones o pasos alcanzados (`lblTotalLogrado`), tiempo total invertido (`lblTiempoInvertido`), estimación calórica y mensaje de rendimiento. Botones para comenzar un nuevo entrenamiento (`btnNuevaRutina`) o salir de la aplicación (`btnCerrarApp`).
-* **Lógica y eventos:** En `Screen4.Initialize`, consulta los registros almacenados en `TinyDB`, renderiza los datos en pantalla y emite una vibración de logro. El usuario puede volver al catálogo de rutinas (`Screen2`) o cerrar el aplicativo.
+### Screen4: Resumen de Resultados
+* **Qué hace:** Muestra la tarjeta final con las estadísticas consolidadas de la rutina que se acaba de terminar.
+* **Datos mostrados:**
+  * Tipo de ejercicio realizado (Sentadillas o Caminata).
+  * Total de repeticiones o pasos conseguidos.
+  * Tiempo total invertido en segundos.
+  * Estimación simple de calorías quemadas.
+  * Mensaje de felicitación por el logro.
+* **Botones de acción:**
+  * **Nuevo Entrenamiento:** Vuelve a la pantalla de selección de rutinas (`Screen2`).
+  * **Cerrar Aplicación:** Finaliza la app ordenadamente.
 
 ---
 
-## 5. Integración de Recursos de Hardware
+## 5. Sensores de Hardware Utilizados
 
-FitMotion incorpora hardware nativo del teléfono inteligente para garantizar que la recolección de datos sea completamente funcional dentro de la solución:
+Cumpliendo con los requisitos de la evaluación, FitMotion utiliza de forma real y funcional los siguientes recursos de hardware del teléfono:
 
-### A. Sensor de Orientación (`OrientationSensor`)
-* **Parámetro utilizado:** Grados de inclinación angular longitudinal (*Pitch*).
-* **Función en el sistema:** Al colocar el teléfono en el bolsillo lateral del pantalón o sujeto al muslo, el sensor registra directamente la inclinación del fémur. Durante la flexión de una sentadilla, el ángulo respecto a la vertical cambia de manera proporcional al descenso.
-* **Criterio cinemático:** Se estableció que para considerar una flexión adecuada, la inclinación debe alcanzar o superar los **45°** de *Pitch*. La repetición se valida únicamente cuando el usuario retorna a la posición erguida (inclinación inferior a **25°**). Este umbral evita conteos fraudulentos causados por simples balanceos de tronco.
+### 1. Sensor de Orientación (`OrientationSensor`)
+* **Qué mide:** Los grados de inclinación del teléfono (*Pitch*).
+* **Para qué sirve en la app:** Al guardar el teléfono en el bolsillo delantero o sobre el muslo, el celular se inclina hacia adelante al agacharse.
+* **Cómo funciona la cuenta:** Cuando la inclinación supera los **45°**, la app reconoce que la persona bajó lo suficiente y emite una vibración corta de aviso. Cuando la persona vuelve a ponerse de pie (menos de **25°**), se suma una repetición válida, vibra de confirmación y el teléfono dice el número en voz alta.
 
-### B. Sensor de Aceleración (`AccelerometerSensor`)
-* **Parámetro utilizado:** Aceleración lineal en el eje vertical (*YAccel*, medido en $\text{m/s}^2$).
-* **Función en el sistema:** En la rutina de caminata y trote, el sensor monitorea las fuerzas reactivas del suelo que se transmiten al cuerpo en cada zancada.
-* **Criterio cinemático:** Al registrarse un impacto que exceda los **12 $\text{m/s}^2$** en el eje vertical, el sistema reconoce la existencia de un paso y lo procesa a través del filtro de estabilidad.
+### 2. Sensor de Aceleración / Movimiento (`AccelerometerSensor`)
+* **Qué mide:** Los cambios de velocidad y fuerza vertical del teléfono en cada paso.
+* **Para qué sirve en la app:** En el modo de caminata o trote, detecta el impacto del pie contra el piso al dar una zancada.
+* **Cómo funciona la cuenta:** Al superar un umbral de movimiento suave (12 m/s²), la app suma un paso. Cuenta con un filtro de tiempo para evitar que un solo rebote cuente dos veces.
 
-### C. Actuadores de Retroalimentación Complementarios
-* **Motor de Vibración (`Sound.Vibrate`):** Suministra una interfaz háptica esencial para el uso a ciegas del dispositivo:
-  * Pulso suave (40 ms): Notifica al usuario que alcanzó la profundidad correcta en sentadilla y ya puede iniciar el ascenso.
-  * Pulso medio (100 ms): Confirma la repetición completada y contabilizada.
-  * Pulso corto (30 ms): Confirma la detección de paso en trote.
-  * Pulso largo (250 ms): Alerta sobre error en credenciales de acceso.
-* **Sintetizador de Voz (`TextToSpeech`):** Verbaliza el inicio del ejercicio y canta en voz alta el número de repetición completada, posibilitando el entrenamiento con manos libres y sin necesidad de observar la pantalla.
+### 3. Actuadores de Sonido, Voz y Vibración
+* **Sonido de Alarma (`Sound`):** Reproduce el archivo de audio `alarma.wav` al alcanzar el objetivo fijado.
+* **Vibración del teléfono:** Permite sentir cuándo la sentadilla llegó abajo y cuándo se completó la repetición o la meta, sin tener que mirar la pantalla.
+* **Sintetizador de Voz (`TextToSpeech`):** Dicta en voz alta las repeticiones y avisa verbalmente cuando la meta fue completada.
 
 ---
 
-## 6. Lógica de Programación y Arquitectura de Bloques
+## 6. ¿Cómo Funciona el Modo Bolsillo?
 
-La programación en bloques de FitMotion fue diseñada con criterios de modularidad, eficiencia y robustez:
+En los sistemas Android, cuando se apaga físicamente la pantalla con el botón de encendido, el sistema operativo congela los sensores de las aplicaciones comunes para ahorrar batería. 
 
-### 1. Máquina de Estados Finitos para Conteo de Repeticiones
-Para prevenir que un usuario que permanezca en posición agachada active múltiples conteos involuntarios, se implementó una máquina de estados controlada por la variable global `fase`:
+Para resolver este problema y permitir que la app funcione dentro del bolsillo sin romperse ni requerir permisos raros en MIT AI2 Companion:
 
-```
-                 Inclinación Pitch >= 45°
-           ┌──────────────────────────────────┐
-           │                                  ▼
-    ┌──────────────┐                  ┌──────────────┐
-    │ FASE ARRIBA  │                  │  FASE ABAJO  │
-    └──────────────┘                  └──────────────┘
-           ▲                                  │
-           └──────────────────────────────────┘
-                 Inclinación Pitch <= 25°
-              (Suma 1 Repetición + Voz + Haptic)
-```
-
-1. **Estado Inicial (`ARRIBA`):** El usuario se encuentra de pie.
-2. **Transición a Descenso:** Cuando `Pitch >= 45°` y la fase es `ARRIBA`, el estado conmuta a `ABAJO`, se actualiza la interfaz indicando profundidad lograda y se emite un pulso háptico de 40 ms.
-3. **Transición a Ascenso:** Cuando `Pitch <= 25°` y la fase es `ABAJO`, el estado regresa a `ARRIBA`, se incrementa el contador general en 1, se genera la vibración de 100 ms y se pronuncia la repetición por síntesis de voz.
-
-### 2. Filtro Temporal de Rebote (Debouncing) en Podómetro
-Durante la zancada, el choque del pie suele producir oscilaciones secundarias en el acelerómetro en cuestión de milisegundos. Para evitar que un único impacto cuente dos o tres pasos:
-* Al detectar un pico de aceleración válido, se incrementa el contador y se fija la variable `cooldown = 2`.
-* Mientras `cooldown` sea mayor a 0, se descartan lecturas subsecuentes, decrementando la variable en cada ciclo de muestreo hasta que el sensor retorne a un rango estable.
-
-### 3. Persistencia de Datos con TinyDB
-La información transita entre pantallas de manera desacoplada mediante etiquetas clave en `TinyDB`:
-* `UsuarioActivo`: Mantiene la identidad del deportista autenticado.
-* `Modo` y `Meta`: Almacenan la rutina configurada en `Screen2` para inicializar `Screen3`.
-* `RepsFinales`, `TiempoFinal` y `ModoFinal`: Consolidados en `Screen3` para ser proyectados en el informe de `Screen4`.
-
-### 4. Doble Reloj Asíncrono
-Se configuraron dos componentes `Clock` con responsabilidades separadas para optimizar el rendimiento del hilo principal:
-* `ClockCrono` (Intervalo de 1000 ms): Gestiona estrictamente la cadencia del cronómetro general en segundos.
-* `ClockSensores` (Intervalo de 250 ms / 4 Hz): Dedicado al muestreo de telemetría inercial y ejecución de condicionales de movimiento, garantizando una respuesta ágil sin saturar el procesamiento del teléfono.
+1. FitMotion incorpora el **Modo Bolsillo**: un botón directo que activa una pantalla en negro absoluto (estilo pantalla de bloqueo de bajo consumo).
+2. Se **bloquean todos los botones interactivos** para que la fricción de la tela del bolsillo no pause el ejercicio ni toque botones por error.
+3. Los sensores de movimiento e inclinación, los relojes internos con `TimerAlwaysFires` y el motor de sonido y voz **permanecen 100% activos**.
+4. El usuario guarda el teléfono en el bolsillo, realiza sus sentadillas o su caminata, escucha el conteo por voz y, al llegar al objetivo (por ejemplo la sentadilla 15), la **alarma suena fuerte desde el bolsillo**.
+5. Al sacarlo, solo pulsa **"🔓 Desbloquear Pantalla"** para revisar su resumen final.
 
 ---
 
-## 7. Guía de Ejecución y Demostración en MIT AI2 Companion
+## 7. Guía Paso a Paso para Probar la App (con MIT AI2 Companion)
 
-Para realizar la comprobación funcional de la aplicación en un dispositivo Android real, se sigue el procedimiento estándar:
+Para probar la aplicación en un teléfono Android real mediante el Companion oficial:
 
-1. **Carga del Proyecto:**
-   * Importar el archivo `FitMotion.aia` en la plataforma web de MIT App Inventor.
-   * En el menú superior, seleccionar **Connect ➔ AI Companion**.
-2. **Enlace con el Dispositivo:**
-   * Abrir la aplicación **MIT AI2 Companion** en el teléfono Android e ingresar el código alfanumérico o escanear el código QR en pantalla.
-3. **Flujo de Prueba en Vivo:**
-   * **Ingreso:** Probar credenciales (`usuario` / `1234`) y observar el control de acceso con vibración de confirmación.
-   * **Configuración:** En el panel de rutinas, seleccionar *Sentadillas Inteligentes*.
-   * **Biomecánica:** Con el teléfono orientado en posición vertical simulando el muslo, realizar la flexión hacia adelante superando los 45°. Se observará el cambio de estado a *¡BUENA PROFUNDIDAD!* y la vibración de aviso. Al erguirse por debajo de 25°, el contador sumará la unidad y el teléfono verbalizará el conteo.
-   * **Control de Sesión:** Probar la alternancia del botón *Pausar / Reanudar*.
-   * **Cierre y Resultados:** Pulsar *Finalizar* para verificar la recepción de métricas consolidadas en la pantalla de resumen.
+1. **Importar el proyecto:**
+   * Entrar a [ai2.appinventor.mit.edu](https://ai2.appinventor.mit.edu).
+   * Ir a *Projects ➔ Import project (.aia) from my computer* y seleccionar el archivo `FitMotion.aia`.
+2. **Conectar el teléfono:**
+   * En el menú superior de App Inventor, hacer clic en *Connect ➔ AI Companion*.
+   * Abrir la app **MIT AI2 Companion** en el teléfono y escanear el código QR que aparece en pantalla.
+3. **Probar el flujo completo:**
+   * **Paso 1 (Login):** Ingresar con `usuario` y `1234`. Presionar *Iniciar Sesión*.
+   * **Paso 2 (Elegir ejercicio y meta):** En *Sentadillas*, revisar la casilla de meta (por ejemplo, cambiarla a 5 para una prueba rápida o dejar 15). Presionar *Iniciar Sentadillas*.
+   * **Paso 3 (Probar el Modo Bolsillo):** En la pantalla de entrenamiento, presionar *🔒 MODO BOLSILLO*. La pantalla se pondrá negra con protección táctil.
+   * **Paso 4 (Hacer el ejercicio):** Con el celular en posición vertical (en el bolsillo o en la mano simulando el muslo), inclinar el teléfono hacia adelante más de 45° (sentadilla abajo) y volver a enderezarlo (sentadilla arriba). Notar la vibración y el conteo por voz.
+   * **Paso 5 (Alarma de meta):** Al completar la última repetición de la meta, escuchar cómo suena la alarma sonora, la vibración larga y el mensaje de voz.
+   * **Paso 6 (Desbloquear y finalizar):** Presionar *🔓 Desbloquear Pantalla* y luego *🏁 Finalizar* para ver el resumen de tiempo y calorías en la pantalla 4.
+
+---
+
+## 8. Conclusión
+
+FitMotion demuestra cómo herramientas accesibles como **MIT App Inventor** permiten crear soluciones móviles prácticas y de alto impacto para la vida diaria. Al conectar directamente el acelerómetro y el sensor de inclinación con respuestas sonoras, por voz y de vibración, se logra una experiencia de ejercicio fluida, manos libres y pensada para la comodidad del usuario común.
