@@ -21,6 +21,12 @@ La aplicación utiliza los sensores inerciales del dispositivo móvil para cuant
 
 ---
 
+<p align="center">
+  <img src="Captura%20de%20pantalla%202026-10-01%20162438.png" alt="FitMotion - Vista de la Aplicación en Teléfono Móvil" width="280" />
+</p>
+
+---
+
 ## 📱 Arquitectura de Pantallas
 
 1. **Screen1 (Login):** Control de acceso seguro (`usuario` / `1234`), control de errores con alerta háptica y persistencia de sesión con `TinyDB`.
