@@ -1,0 +1,11 @@
+# Windows & Office temporary files
+~$*.docx
+~$*.xlsx
+~$*.pptx
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
